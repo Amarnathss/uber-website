@@ -30,6 +30,11 @@ This document provides information on the available API routes in the backend.
       "password": "password123"
   }
   ```
+  - fullname.firstname (string, required): Minimum 3 characters.
+  - fullname.lastname (string, optional)
+  - email (string, required): Must be a valid email address.
+  - password (string, required): Minimum 6 characters.
+
 
 - **Response Format:**
   ```json
