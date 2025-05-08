@@ -1,7 +1,7 @@
 import userModel from "../models/user_model.js";
 import createUser from "../services/user_service.js";
 import { validationResult } from 'express-validator'
-import blockListTokenModel from "../models/blockListToken.model.js";
+import blockListTokenModel from "../models/blockListToken_model.js";
 
 export const registerUser = async (req,res , next)=>{
     const errors = validationResult(req);
@@ -11,6 +11,11 @@ export const registerUser = async (req,res , next)=>{
 
     const {fullname: { firstname, lastname }, email , password} = req.body;
 
+    const isUserAlreadyExist = userModel.findOne({email})
+
+    if(isUserAlreadyExist){
+        return res.status(400).json({message: 'user already exist'})
+    }
     const hashPassword = await userModel.hashPassword(password);
 
 
@@ -58,8 +63,10 @@ export const getUserProfile = async (req,res)=>{
 }
 
 export const logoutUser = async (req , res)=>{
-    res.clearCookie('token');
     const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
-    await blockListTokenModel.create({token});
+    res.clearCookie('token');
+    if (token) {
+        await blockListTokenModel.create({ token });
+    }
     res.status(200).json({message: 'logged out'});
 }
