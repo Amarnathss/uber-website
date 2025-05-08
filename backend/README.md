@@ -95,3 +95,53 @@ This document provides information on the available API routes in the backend.
   ```
 
 
+### Get User Profile
+
+- **Endpoint:**  
+  `GET /user/profile`
+
+- **Description:**  
+  This route returns the profile information of the authenticated user. It requires a valid authentication token.
+
+- **Request Format:**
+
+  **Headers:**  
+  `Authorization: Bearer <token>`  
+  or  
+  `Cookie: token=<token>`
+
+- **Response Format:**
+  ```json
+  {
+      "fullname": {
+          "firstname": "hello1",
+          "lastname": "hello2"
+      },
+      "email": "hello2@gmail.com",
+      "_id": "681341cbeb435f54f71371ce",
+      "__v": 0
+  }
+  ```
+
+### Logout User
+
+- **Endpoint:**  
+  `GET /user/logout`
+
+- **Description:**  
+  This route logs out the current user by clearing the authentication token cookie and adding the token to a blocklist. It requires a valid authentication token.
+
+- **Request Format:**
+
+  **Headers:**  
+  `Authorization: Bearer <token>`  
+  or  
+  `Cookie: token=<token>`
+
+- **Response Format:**
+  ```json
+  {
+      "message": "logged out"
+  }
+  ```
+
